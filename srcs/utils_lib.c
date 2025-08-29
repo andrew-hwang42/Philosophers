@@ -6,7 +6,7 @@
 /*   By: ahwang <ahwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 08:13:27 by ahwang            #+#    #+#             */
-/*   Updated: 2025/06/10 12:35:10 by ahwang           ###   ########.fr       */
+/*   Updated: 2025/08/29 22:55:08 by ahwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_modified_atoi(char *str)
 	{
 		if (!('0' <= str[i] && str[i] <= '9'))
 			return (err_msg("invalid character exists"), 0);
-		nbr = nbr * 10 + (*str - '0');
+		nbr = nbr * 10 + (str[i] - '0');
 		i++;
 	}
 	if (ft_strlen(str) > ft_strlen("2147483647")
