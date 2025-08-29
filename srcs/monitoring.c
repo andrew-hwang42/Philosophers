@@ -6,7 +6,7 @@
 /*   By: ahwang <ahwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:39:23 by ahwang            #+#    #+#             */
-/*   Updated: 2025/06/12 11:49:34 by ahwang           ###   ########.fr       */
+/*   Updated: 2025/08/29 06:49:36 by ahwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int	check_each_philo(t_data *data, int i)
 {
-	custom_usleep(100);
+	if (data->time_to_die < data->time_to_eat + data->time_to_sleep)
+		custom_usleep(1);
+	else
+		custom_usleep(100);
 	if (pthread_mutex_lock(&data->struct_philo[i].thread_mutex))
 		return (err_msg("failed to lock mutex"), 0);
 	if (get_time_mili() - data->struct_philo[i].time_last

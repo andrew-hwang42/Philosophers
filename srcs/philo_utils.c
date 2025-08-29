@@ -6,7 +6,7 @@
 /*   By: ahwang <ahwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:06:26 by ahwang            #+#    #+#             */
-/*   Updated: 2025/06/12 12:23:46 by ahwang           ###   ########.fr       */
+/*   Updated: 2025/08/29 06:45:50 by ahwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	set_state(t_philo *philo, int state)
 
 void	*philo_one(void *p)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = p;
 	if (!init_struct_philo(data, 0))

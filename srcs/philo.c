@@ -6,7 +6,7 @@
 /*   By: ahwang <ahwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 08:25:49 by ahwang            #+#    #+#             */
-/*   Updated: 2025/06/12 11:43:37 by ahwang           ###   ########.fr       */
+/*   Updated: 2025/08/29 06:52:00 by ahwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	*philo(void *p)
 	philo->time_last = get_time_mili();
 	if (pthread_mutex_unlock(&philo->thread_mutex))
 		return (err_msg("failed to unlock mutex"), NULL);
-	custom_usleep((philo->id % 2) * 300);
+	custom_usleep((philo->id % 2) * 30);
 	while (eat != philo->ref_data->num_must_eat && get_state(philo) == ALIVE)
 	{
 		if (!philo_print(philo, "is thinking"))
