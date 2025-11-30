@@ -6,7 +6,7 @@
 /*   By: ahwang <ahwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 06:36:23 by ahwang            #+#    #+#             */
-/*   Updated: 2025/06/12 11:46:29 by ahwang           ###   ########.fr       */
+/*   Updated: 2025/11/30 20:33:23 by ahwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define ALIVE		1
 # define DEAD		2
 # define FULL		3
+# define TIME_MONITOR	10
 
 typedef struct s_philo
 {
