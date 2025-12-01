@@ -6,23 +6,11 @@
 /*   By: ahwang <ahwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:39:23 by ahwang            #+#    #+#             */
-/*   Updated: 2025/11/30 20:40:33 by ahwang           ###   ########.fr       */
+/*   Updated: 2025/12/01 09:57:46 by ahwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/philo.h"
-
-int	philo_print_die(t_philo *philo)
-{
-	if (pthread_mutex_lock(&philo->ref_data->global_mutex_print))
-		return (err_msg("failed to lock mutex"), 0);
-	printf("%ld ", get_time_mili()
-		- philo->ref_data->time_start - TIME_MONITOR);
-	printf("%d %s\n", philo->id, "died");
-	if (pthread_mutex_unlock(&philo->ref_data->global_mutex_print))
-		return (err_msg("failed to unlock mutex"), 0);
-	return (1);
-}
 
 int	check_each_philo(t_data *data, int i)
 {

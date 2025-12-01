@@ -6,7 +6,7 @@
 /*   By: ahwang <ahwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 04:20:26 by ahwang            #+#    #+#             */
-/*   Updated: 2025/11/30 20:30:24 by ahwang           ###   ########.fr       */
+/*   Updated: 2025/12/01 09:58:03 by ahwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int		philo_eat(t_philo *philo, int *eat);
 void	*philo(void *data);
 
 /* monitoring.c */
-int		philo_print_die(t_philo *philo);
 int		check_each_philo(t_data *data, int i);
 int		monitoring(t_data *data);
 
 /* philo_utils.c */
 int		philo_print(t_philo *philo, char *str);
+int		philo_print_die(t_philo *philo);
 int		get_state(t_philo *philo);
 int		set_state(t_philo *philo, int state);
 void	*philo_one(void *p);
