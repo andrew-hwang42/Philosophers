@@ -6,7 +6,7 @@
 /*   By: ahwang <ahwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 06:20:52 by ahwang            #+#    #+#             */
-/*   Updated: 2025/06/12 11:42:28 by ahwang           ###   ########.fr       */
+/*   Updated: 2025/12/04 20:21:37 by ahwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,57 +17,51 @@ void	err_msg(char *msg)
 	printf("Error: %s\n", msg);
 }
 
-size_t	get_time_mili(void)
+int	ft_strlen(char *str)
 {
-	struct timeval	current;
-	size_t			time;
+	int	i;
 
-	gettimeofday(&current, NULL);
-	time = current.tv_sec * 1000;
-	time += current.tv_usec / 1000;
-	return (time);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
-size_t	get_time_micro(void)
+int	ft_modified_atoi(char *str)
 {
-	struct timeval	current;
-	size_t			time;
+	int		i;
+	long	nbr;
 
-	gettimeofday(&current, NULL);
-	time = current.tv_sec;
-	time *= 1000000;
-	time += current.tv_usec;
-	return (time);
-}
-
-void	custom_usleep(size_t timecheck)
-{
-	size_t	start;
-
-	start = get_time_micro();
-	timecheck *= 1000;
-	while (get_time_micro() - start < timecheck)
-		usleep(100);
+	i = 0;
+	nbr = 0;
+	while (str[i])
+	{
+		if (!('0' <= str[i] && str[i] <= '9'))
+			return (err_msg("invalid character exists"), 0);
+		nbr = nbr * 10 + (str[i] - '0');
+		i++;
+	}
+	if (ft_strlen(str) > ft_strlen("2147483647")
+		|| nbr > 2147483647)
+		return (err_msg("out of int range"), 0);
+	return (nbr);
 }
 
 void	free_data(t_data *data, char *msg)
 {
 	int	i;
 
-	i = 0;
-	while (i < data->num_of_philo)
-	{
+	i = -1;
+	while (++i < data->num_of_philo)
 		pthread_join(data->thread_philo[i], NULL);
-		i++;
-	}
 	pthread_mutex_destroy(&data->global_mutex_print);
 	pthread_mutex_destroy(&data->global_mutex_state);
-	i = 0;
-	while (i < data->num_of_philo)
-	{
+	i = -1;
+	while (++i < data->num_of_philo)
+		pthread_mutex_destroy(&data->struct_philo[i].thread_mutex);
+	i = -1;
+	while (++i < data->num_of_philo)
 		pthread_mutex_destroy(&data->fork[i]);
-		i++;
-	}
 	if (data->thread_philo)
 		free(data->thread_philo);
 	if (data->fork)

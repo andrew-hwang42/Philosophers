@@ -25,8 +25,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (!set_thread(&data))
 		return (1);
-	if (!monitoring(&data))
-		return (free_data(&data, NULL), 1);
+	monitoring(&data);
 	free_data(&data, NULL);
 	return (0);
 }

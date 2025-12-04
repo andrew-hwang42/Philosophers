@@ -16,13 +16,16 @@
 # define ALIVE		1
 # define DEAD		2
 # define FULL		3
-# define TIME_MONITOR	10
+# define TIME_MONITOR	1
 
 typedef struct s_philo
 {
 	int				id;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	int				has_left;
+	int				has_right;
+	int				finished;
 	size_t			time_last;
 	pthread_mutex_t	thread_mutex;
 	struct s_data	*ref_data;
@@ -36,6 +39,7 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				num_must_eat;
 	int				state;
+	int				full_count;
 	size_t			time_start;
 	pthread_t		*thread_philo;
 	pthread_mutex_t	*fork;

@@ -19,8 +19,11 @@ int	init_struct_philo(t_data *data, int i)
 	data->struct_philo[i].left_fork = &data->fork[i];
 	data->struct_philo[i].right_fork
 		= &data->fork[(i + 1) % data->num_of_philo];
+	data->struct_philo[i].has_left = 0;
+	data->struct_philo[i].has_right = 0;
+	data->struct_philo[i].finished = 0;
 	data->struct_philo[i].time_last = get_time_mili();
-	if (pthread_mutex_init(&data->struct_philo->thread_mutex, NULL))
+	if (pthread_mutex_init(&data->struct_philo[i].thread_mutex, NULL))
 		return (err_msg("failed to init mutex"), 0);
 	data->struct_philo[i].ref_data = data;
 	return (1);

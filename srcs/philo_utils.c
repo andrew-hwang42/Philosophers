@@ -6,7 +6,7 @@
 /*   By: ahwang <ahwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:06:26 by ahwang            #+#    #+#             */
-/*   Updated: 2025/12/01 09:58:10 by ahwang           ###   ########.fr       */
+/*   Updated: 2025/12/04 20:04:07 by ahwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 
 int	philo_print(t_philo *philo, char *str)
 {
+	int	state;
+
+	if (pthread_mutex_lock(&philo->ref_data->global_mutex_state))
+		return (err_msg("failed to lock mutex"), 0);
+	state = philo->ref_data->state;
+	if (pthread_mutex_unlock(&philo->ref_data->global_mutex_state))
+		return (err_msg("failed to unlock mutex"), 0);
+	if (state != ALIVE)
+		return (0);
 	if (pthread_mutex_lock(&philo->ref_data->global_mutex_print))
 		return (err_msg("failed to lock mutex"), 0);
 	printf("%ld ", get_time_mili() - philo->ref_data->time_start);
@@ -25,10 +34,17 @@ int	philo_print(t_philo *philo, char *str)
 
 int	philo_print_die(t_philo *philo)
 {
+	size_t	death_time;
+	size_t	timestamp;
+
+	death_time = philo->time_last + philo->ref_data->time_to_die;
+	if (death_time < philo->ref_data->time_start)
+		timestamp = 0;
+	else
+		timestamp = death_time - philo->ref_data->time_start;
 	if (pthread_mutex_lock(&philo->ref_data->global_mutex_print))
 		return (err_msg("failed to lock mutex"), 0);
-	printf("%ld ", get_time_mili()
-		- philo->ref_data->time_start - TIME_MONITOR);
+	printf("%ld ", timestamp);
 	printf("%d %s\n", philo->id, "died");
 	if (pthread_mutex_unlock(&philo->ref_data->global_mutex_print))
 		return (err_msg("failed to unlock mutex"), 0);

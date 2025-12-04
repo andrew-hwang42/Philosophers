@@ -45,6 +45,7 @@ int	init_struct_data(char **argv, t_data *data)
 		|| !data->num_must_eat)
 		return (0);
 	data->state = ALIVE;
+	data->full_count = 0;
 	data->time_start = get_time_mili();
 	data->thread_philo = malloc(data->num_of_philo * sizeof(pthread_t));
 	data->fork = malloc(data->num_of_philo * sizeof(pthread_mutex_t));

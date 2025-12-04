@@ -6,7 +6,7 @@
 #    By: ahwang <ahwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/10 04:19:43 by ahwang            #+#    #+#              #
-#    Updated: 2025/06/12 11:39:33 by ahwang           ###   ########.fr        #
+#    Updated: 2025/12/04 20:06:17 by ahwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,10 +20,11 @@ FILES =	main \
 	init_struct_data \
 	set_thread \
 	philo \
+	philo_eat \
 	monitoring \
 	philo_utils \
+	utils_time \
 	utils \
-	utils_lib \
 
 INCS_DIR = ./incs
 SRCS_DIR = ./srcs

@@ -6,39 +6,53 @@
 /*   By: ahwang <ahwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:39:23 by ahwang            #+#    #+#             */
-/*   Updated: 2025/12/01 09:57:46 by ahwang           ###   ########.fr       */
+/*   Updated: 2025/12/04 20:21:18 by ahwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/philo.h"
 
-int	check_each_philo(t_data *data, int i)
+int	death_checker(t_data *data, int i, size_t now)
 {
-	if (data->time_to_die < data->time_to_eat + data->time_to_sleep + 10)
-		custom_usleep(1);
-	else
-		custom_usleep(TIME_MONITOR);
-	if (pthread_mutex_lock(&data->struct_philo[i].thread_mutex))
-		return (err_msg("failed to lock mutex"), 0);
-	if (get_time_mili() - data->struct_philo[i].time_last
-		>= (size_t)data->time_to_die)
+	int	status;
+
+	status = 1;
+	if (now - data->struct_philo[i].time_last >= (size_t)data->time_to_die)
 	{
 		if (pthread_mutex_lock(&data->global_mutex_state))
-			return (err_msg("failed to lock mutex"), 0);
-		if (data->state != FULL)
-			data->state = DEAD;
-		if (data->state == DEAD)
 		{
-			if (!philo_print_die(&data->struct_philo[i]))
-				return (0);
+			err_msg("failed to lock mutex");
+			status = 0;
 		}
-		if (pthread_mutex_unlock(&data->global_mutex_state))
-			return (err_msg("failed to unlock mutex"), 0);
-		return (0);
+		else
+		{
+			if (data->state != FULL)
+				data->state = DEAD;
+			if (data->state == DEAD && !philo_print_die(&data->struct_philo[i]))
+				status = 0;
+			if (pthread_mutex_unlock(&data->global_mutex_state))
+			{
+				pthread_mutex_unlock(&data->struct_philo[i].thread_mutex);
+				return (err_msg("failed to unlock mutex"), 0);
+			}
+		}
+		status = 0;
 	}
+	return (status);
+}
+
+int	check_each_philo(t_data *data, int i)
+{
+	int		status;
+
+	if (data->struct_philo[i].finished)
+		return (1);
+	if (pthread_mutex_lock(&data->struct_philo[i].thread_mutex))
+		return (err_msg("failed to lock mutex"), 0);
+	status = death_checker(data, i, get_time_mili());
 	if (pthread_mutex_unlock(&data->struct_philo[i].thread_mutex))
 		return (err_msg("failed to unlock mutex"), 0);
-	return (1);
+	return (status);
 }
 
 int	monitoring(t_data *data)
@@ -50,6 +64,8 @@ int	monitoring(t_data *data)
 	i = 0;
 	while (1)
 	{
+		if (get_state(&data->struct_philo[i]) == FULL)
+			return (1);
 		if (!check_each_philo(data, i))
 			return (0);
 		i++;
